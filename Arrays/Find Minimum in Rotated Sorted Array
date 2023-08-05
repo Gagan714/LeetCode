@@ -1,1 +1,8 @@
-
+lass Solution {
+    public int findMin(int[] nums) {
+        Arrays.sort(nums);
+        return nums[0];
+        
+    }
+}
+//It's not a proper way
