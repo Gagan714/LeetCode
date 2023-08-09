@@ -1,0 +1,16 @@
+class Solution {
+    public int minElements(int[] nums, int limit, int goal) {
+        long sum=0;
+        for(int i=0;i<nums.length;i++){
+            sum+=nums[i];
+        }
+        long diff=Math.abs(goal-sum);
+        if(goal==0)
+         return 1;
+         long output=diff/limit;
+         if(diff%limit!=0){
+         output++;
+       }      
+          return (int)output;
+    }
+}
