@@ -1,1 +1,16 @@
-Robot Return to Origin
+class Solution {
+    public boolean judgeCircle(String moves) {
+        int l=0,r=0,u=0,d=0;
+        char []move=moves.toCharArray();
+        for(int i=0;i<move.length;i++){
+            if(move[i]=='L')l++;
+            if(move[i]=='R')r++;
+            if(move[i]=='U')u++;
+            if(move[i]=='D')d++;
+        }
+        if((l-r)==0&&(u-d)==0){
+            return true;
+        }
+        return false;
+    }
+}
