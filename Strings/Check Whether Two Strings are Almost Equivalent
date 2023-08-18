@@ -1,1 +1,27 @@
-
+class Solution {
+    public boolean checkAlmostEquivalent(String word1, String word2) {
+        HashMap<Character,Integer> map=new HashMap<Character,Integer>();
+        for(int i=0;i<word1.length();i++){
+            if(map.containsKey(word1.charAt(i))){
+                map.put(word1.charAt(i),map.get(word1.charAt(i))+1);
+            }else{
+                map.put(word1.charAt(i),1);
+            }
+        }
+        for(int j=0;j<word2.length();j++){
+            if(map.containsKey(word2.charAt(j))){
+                map.put(word2.charAt(j),map.get(word2.charAt(j))-1);
+            }else{
+                map.put(word2.charAt(j),-1);
+            }
+        }
+        String word=word1+word2;
+        int n=word1.length()+word2.length();
+        for(int g=0;g<n;g++){
+            if((map.get(word.charAt(g))>3)||(map.get(word.charAt(g))<-3)){
+                return false;
+            }
+        }
+        return true;
+    }
+}
