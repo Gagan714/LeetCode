@@ -1,1 +1,19 @@
-
+class Solution {
+    public String addSpaces(String s, int[] spaces) {
+        String []words=new String[spaces.length+1];
+        int count=0;
+        for(int i=0;i<spaces.length;i++){
+            if(i==0){
+            words[count]=s.substring(0,spaces[i]);
+            count++;
+            }else if(i>0||i<spaces.length-1){
+                words[count]=s.substring(spaces[i-1],spaces[i]);
+                count++;
+            }if(i==spaces.length-1){
+                words[count]=s.substring(spaces[i]);
+            }
+        }
+        String output=String.join(" ",words);
+        return output;
+    }
+}
