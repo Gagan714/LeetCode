@@ -1,1 +1,14 @@
-
+class Solution {
+    public String greatestLetter(String s) {
+      for(int i='z';i>='a';i--){
+          String lower= Character.toString(i);
+          if(s.contains(lower)){
+              String upper=Character.toString(i-32);
+              if(s.contains(upper)){
+                  return upper;
+              }
+          }
+      } 
+      return ""; 
+    }
+}
