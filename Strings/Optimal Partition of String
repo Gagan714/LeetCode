@@ -1,1 +1,18 @@
-
+class Solution {
+    public int partitionString(String s) {
+        int count=1;
+        String sb="";
+        int i=0;
+        while(i<s.length()){
+            String temp=""+s.charAt(i);
+            if(sb.contains(temp)){
+                 count++;
+                sb="";
+            }else{
+                sb=sb+temp;
+                i++;
+            }  
+        }
+        return count;
+    }
+}
