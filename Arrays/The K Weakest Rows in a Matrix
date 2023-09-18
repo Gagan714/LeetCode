@@ -1,1 +1,22 @@
-
+class Solution {
+    public int[] kWeakestRows(int[][] mat, int k) {
+        int[] row=new int[mat.length];
+        for(int i=0;i<mat.length;i++){
+            int soldiers=0;
+            for(int j=0;j<mat[i].length;j++){
+                if(mat[i][j]==1){
+                    soldiers++;
+                }else{
+                    break;
+                }
+            }
+            row[i]=soldiers*1000+i;
+        }
+        Arrays.sort(row);
+        int[] ans=new int[k];
+        for(int g=0;g<k;g++){
+            ans[g]=row[g]%1000;
+        }
+        return ans;
+    }
+}
