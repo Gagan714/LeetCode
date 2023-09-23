@@ -1,1 +1,21 @@
-
+class Solution {
+    public int[][] sortTheStudents(int[][] score, int k) {
+        HashMap<Integer,Integer> map=new HashMap<Integer,Integer>();
+        int m=score.length;
+        int n=score[0].length;
+        int []arr=new int[m];
+        int a=0;
+        for(int i=0;i<m;i++){
+            map.put(score[i][k],i);
+            arr[a++]=score[i][k];
+        }
+        Arrays.sort(arr);
+        int [][]ans=new int[m][n];
+        int b=m-1;
+        for(int i=0;i<m;i++){
+            int j=map.get(arr[i]);
+            ans[b--]=score[j];
+        }
+        return ans;
+    }
+}
