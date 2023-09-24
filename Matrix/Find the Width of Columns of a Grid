@@ -1,1 +1,23 @@
-
+class Solution {
+    public int[] findColumnWidth(int[][] grid) {
+        int ans[]=new int[grid[0].length];
+        int a=0;
+        for(int i=0;i<grid[0].length;i++){
+            int max=0;
+            for(int j=0;j<grid.length;j++){
+                int current=grid[j][i];
+                int flag=0;
+                if(current<=0){
+                    flag=1;
+                }
+                while(current!=0){
+                    current=current/10;
+                    flag++;
+                }
+                max=Math.max(max,flag);
+            }
+            ans[a++]=max;
+        }
+        return ans;
+    }
+}
