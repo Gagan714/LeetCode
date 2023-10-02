@@ -1,1 +1,16 @@
-
+class Solution {
+    public int[] nextGreaterElements(int[] nums) {
+        int []output=new int[nums.length];
+        for(int i=0;i<nums.length;i++){
+            output[i]=-1;
+            for(int j=1;j<nums.length;j++){
+                if(nums[(i+j)%nums.length]>nums[i]){
+                    output[i]=nums[(i+j)%nums.length];
+                    break;
+                }
+            }
+        }
+        return output;
+    }
+}
+//(i+j)%nums.length for circular array to move from i+1 to end and then from start to i//
