@@ -1,1 +1,19 @@
-
+class Solution {
+    public boolean winnerOfGame(String colors) {
+        int Acount=0;
+        int Bcount=0;
+        for(int i=1;i<colors.length()-1;i++){
+            char c=colors.charAt(i);
+            char prev=colors.charAt(i-1);
+            char after=colors.charAt(i+1);
+            if(c==prev && c==after){
+                if(c=='A'){
+                    Acount++;
+                }else{
+                    Bcount++;
+                }
+            }
+        }
+        return Acount>Bcount;
+    }
+}
