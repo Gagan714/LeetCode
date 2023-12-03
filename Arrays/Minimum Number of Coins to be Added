@@ -1,0 +1,22 @@
+class Solution {
+    public int minimumAddedCoins(int[] coins, int target) {
+        Arrays.sort(coins);
+        int output=0;
+        int temp=1;
+        for (int i=0;i<coins.length;i++) {
+            while (coins[i]>temp) {
+                output+=1;
+                 temp*=2;
+            }
+            temp+=coins[i];
+            if (temp>target) {
+                break;
+            }
+        }
+        while (temp<=target) {
+            output+=1;
+            temp*=2;
+        }
+        return output;
+    }
+}
