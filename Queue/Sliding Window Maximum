@@ -1,1 +1,40 @@
+/*class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int []output=new int[nums.length-k+1];
+        int i=0;
+        int j=k;
+        int g=0;
+        while(j<=nums.length){
+            int max=Integer.MIN_VALUE;
+            for(int m=i;m<j;m++){
+                max=Math.max(nums[m],max);
+            }
+            output[g++]=max;
+            i++;
+            j++;
+        }
+        return output;
+    } 
+}*/
+
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int []output=new int[nums.length-k+1];
+        int g=0;
+        Deque<Integer> deque=new ArrayDeque<>();
+        for(int i=0;i<nums.length;i++){
+            while(!deque.isEmpty()&&deque.peek()<=i-k){
+                deque.poll();
+            }
+            while(!deque.isEmpty()&&nums[deque.peekLast()]<nums[i]){
+                deque.pollLast();
+            }
+            deque.offer(i);
+            if(i>=k-1){
+                output[g++]=nums[deque.peek()];
+            }
+        }
+        return output;
+    }
+}
 
