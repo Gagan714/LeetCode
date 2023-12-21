@@ -1,0 +1,23 @@
+
+class Solution {
+    private int fruit(int G, int n,int[] prices, int offer, int[][] dp) {
+         if (G==n)
+            return 0;
+        if (dp[G][offer] != -1)
+            return dp[G][offer];
+        if (offer>0) {
+            return dp[G][offer] = Math.min(prices[G]+fruit(G+1, n, prices,G+1, dp),
+                    fruit(G+1, n, prices,offer-1, dp));
+        }
+        return dp[G][offer] = prices[G] + fruit(G+1, n,prices,G+1, dp);
+    }
+//SKY CODES
+    public int minimumCoins(int [] prices) {
+        int n = prices.length;
+        int[][] dp = new int[n + 1][n + 1];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+        return fruit(0, n, prices, 0, dp);
+    }
+}
