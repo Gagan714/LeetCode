@@ -1,0 +1,23 @@
+class Solution {
+    public long largestPerimeter(int[] nums) {
+        Arrays.sort(nums);
+        int index=0;
+        long number=0;
+        for(int i=nums.length-1;i>=2;i--){
+            if(nums[i]/2<nums[i-1]){
+                number=nums[i];
+                index=i;
+                break;
+            }
+        }
+        long sum=0;
+        for(int j=0;j<index;j++){
+            sum+=nums[j];
+        }
+        if(sum>number){
+            sum=sum+nums[index];
+            return sum;
+        }
+        return -1;
+    }
+}
