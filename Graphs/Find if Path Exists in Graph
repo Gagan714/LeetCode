@@ -1,0 +1,31 @@
+class Solution {
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+       ArrayList<ArrayList<Integer>> graph=new ArrayList<>();
+       for(int i=0;i<n;i++){
+           graph.add(new ArrayList<Integer>());
+       }
+       for(int i=0;i<edges.length;i++){
+           int src=edges[i][0];
+           int dest=edges[i][1];
+           graph.get(src).add(dest);
+           graph.get(dest).add(src);
+       }
+       Queue<Integer> q=new LinkedList<>();
+       q.add(source);
+       boolean vis[]=new boolean[n];
+       while(!q.isEmpty()){
+           int node=q.remove();
+           if(node==destination){
+               return true;
+           }
+           vis[node]=true;
+           for(int i=0;i<graph.get(node).size();i++){
+               if(!vis[graph.get(node).get(i)]){
+                   vis[graph.get(node).get(i)]=true;
+                   q.add(graph.get(node).get(i));
+               }
+           }
+       }
+       return false;
+    }  
+}
