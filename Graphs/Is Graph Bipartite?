@@ -1,0 +1,29 @@
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+       int vis[]=new int[graph.length];
+       Arrays.fill(vis,-1);
+       for(int i=0;i<vis.length;i++){
+           if(vis[i]==-1 && !bfs(vis,graph,i)){
+               return false;
+           }
+       } 
+       return true;
+    }
+    public boolean bfs(int []vis,int [][]graph,int src){
+        Queue<Integer> q=new LinkedList<>();
+        vis[src]=0;
+        q.add(src);
+        while(!q.isEmpty()){
+            int n=q.remove();
+            for(int i=0;i<graph[n].length;i++){
+                if(vis[graph[n][i]]==-1){
+                    vis[graph[n][i]]=1-vis[n];
+                    q.add(graph[n][i]);
+                }else if(vis[graph[n][i]]==vis[n]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
