@@ -1,0 +1,28 @@
+class Solution {
+    public List<Integer> eventualSafeNodes(int[][] graph) {
+        boolean []rec=new boolean[graph.length];
+        List<Integer> output=new ArrayList<>();
+        for(int i=0;i<graph.length;i++){
+            if(dfs(graph,new boolean[graph.length],i,rec)){
+                output.add(i);
+            }
+        }
+        return output;
+    }
+    public boolean dfs(int [][]graph,boolean []vis,int src,boolean []rec){
+        vis[src]=true;
+        rec[src]=true;
+        for(int i=0;i<graph[src].length;i++){
+            if(!vis[graph[src][i]]){
+                if(!dfs(graph,vis,graph[src][i],rec)){
+                    return false;
+                }
+            }
+            if(rec[graph[src][i]]){
+                return false;
+            }
+        }
+        rec[src]=false;
+        return true;
+    }
+}
