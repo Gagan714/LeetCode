@@ -1,0 +1,45 @@
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        boolean []vis=new boolean[numCourses];
+        List<List<Integer>> graph=new ArrayList<>();
+        for(int i=0;i<numCourses;i++){
+            graph.add(new ArrayList<>());
+        }
+        for(int i=0;i<prerequisites.length;i++){
+            int a=prerequisites[i][0];
+            int b=prerequisites[i][1];
+            graph.get(b).add(a);
+        }
+        int []order=new int[numCourses];
+        int size=0;
+        Stack<Integer> stack=new Stack<>();
+        boolean []rec=new boolean[numCourses];
+        for(int i=0;i<vis.length;i++){
+            if(!vis[i]){
+                if(!dfs(graph,vis,i,stack,rec)){
+                    return new int[0];
+                }
+            }
+        }
+        while(!stack.isEmpty()){
+            order[size++]=stack.pop();
+        }
+        return order;
+    }
+    public boolean dfs(List<List<Integer>> graph,boolean[] vis,int src,Stack<Integer> stack,boolean []rec){
+        vis[src]=true;
+        rec[src]=true;
+        for(int i=0;i<graph.get(src).size();i++){
+            if(!vis[graph.get(src).get(i)]){
+                if(!dfs(graph,vis,graph.get(src).get(i),stack,rec)){
+                    return false;
+                }
+            }else if(rec[graph.get(src).get(i)]){
+                    return false;
+                }
+        }
+        rec[src]=false;
+        stack.push(src);
+        return true;
+    }
+}
