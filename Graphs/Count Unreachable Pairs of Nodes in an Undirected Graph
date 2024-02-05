@@ -1,0 +1,31 @@
+class Solution {
+    public long countPairs(int n, int[][] edges) {
+        long sum=0;
+        List<List<Integer>> graph=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            graph.add(new ArrayList<>());
+        }
+        for(int i=0;i<edges.length;i++){
+            graph.get(edges[i][0]).add(edges[i][1]);
+            graph.get(edges[i][1]).add(edges[i][0]);
+        }
+        boolean vis[]=new boolean[n];
+        for(int i=0;i<n;i++){
+            long node=0;
+            if(!vis[i]){
+                node=dfs(graph,vis,i,node);
+                sum+=(node*(n-node));
+            }
+        }
+        return sum/2;
+    }
+    public long dfs(List<List<Integer>> graph,boolean []vis,int src,long node){
+        vis[src]=true;
+        for(int i=0;i<graph.get(src).size();i++){
+            if(!vis[graph.get(src).get(i)]){
+                node=dfs(graph,vis,graph.get(src).get(i),node);
+            }
+        }
+        return node+1;
+    }
+}
