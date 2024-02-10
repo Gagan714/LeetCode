@@ -1,0 +1,91 @@
+class Solution {
+    public int shortestPathBinaryMatrix(int[][] grid) {
+          int m=grid.length;
+        if(grid[0][0]!=0 || grid[m-1][m-1]!=0){
+            return -1;
+        }
+        grid[0][0]=1;
+       grid[m-1][m-1]=2;
+       int output=Integer.MAX_VALUE;
+       Queue<Integer> q=new LinkedList<>();
+       q.add(0);
+       q.add(0);
+       q.add(1);
+       while(!q.isEmpty()){
+           int row=q.remove();
+           int column=q.remove();
+           int val=q.remove();
+           if(grid[row][column]==2){
+               output=Math.min(output,val);
+           }
+           if(row<m-1 && (grid[row+1][column]==0 || grid[row+1][column]==2)){
+              q.add(row+1);
+              q.add(column);
+              q.add(val+1);
+              if(grid[row+1][column]!=2){
+              grid[row+1][column]=1;
+              }
+          }
+          if(column<m-1 && (grid[row][column+1]==0 ||grid[row][column+1]==2)){
+              q.add(row);
+              q.add(column+1);
+              q.add(val+1);
+              if(grid[row][column+1]!=2){
+              grid[row][column+1]=1;
+              }
+          }
+          if(row>0 && (grid[row-1][column]==0 || grid[row-1][column]==2 )){
+              q.add(row-1);
+              q.add(column);
+              q.add(val+1);
+              if(grid[row-1][column]!=2){
+              grid[row-1][column]=1;
+              }
+          }
+          if(column>0 && (grid[row][column-1]==0 ||grid[row][column-1]==2)){
+              q.add(row);
+              q.add(column-1);
+              q.add(val+1);
+              if(grid[row][column-1]!=2){
+              grid[row][column-1]=1;
+              }
+          }
+          if(row<m-1 && column<m-1 && (grid[row+1][column+1]==0 || grid[row+1][column+1]==2)){
+              q.add(row+1);
+              q.add(column+1);
+              q.add(val+1);
+              if(grid[row+1][column+1]!=2){
+              grid[row+1][column+1]=1;
+              }
+          }
+          if(row>0 && column>0 && (grid[row-1][column-1]==0 || grid[row-1][column-1]==2)){
+              q.add(row-1);
+              q.add(column-1);
+              q.add(val+1);
+              if(grid[row-1][column-1]!=2){
+              grid[row-1][column-1]=1;
+              }
+          }
+          if(row>0 && column<m-1 && (grid[row-1][column+1]==0 || grid[row-1][column+1]==2)){
+              q.add(row-1);
+              q.add(column+1);
+              q.add(val+1);
+              if(grid[row-1][column+1]!=2){
+              grid[row-1][column+1]=1;
+              }
+          }
+          if(row<m-1 && column>0 && (grid[row+1][column-1]==0 || grid[row+1][column-1]==2)){
+              q.add(row+1);
+              q.add(column-1);
+              q.add(val+1);
+              if(grid[row+1][column-1]!=2){
+              grid[row+1][column-1]=1;
+              }
+          }
+       }
+       if(output!=Integer.MAX_VALUE){
+           return output;
+       }
+       return -1;
+    }
+}
