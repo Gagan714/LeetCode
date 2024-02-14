@@ -1,0 +1,51 @@
+class Pair{
+        int to;
+        int wt;
+    Pair(int to,int wt){
+            this.to=to;
+            this.wt=wt;
+        }
+    }
+class Solution {
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+      Queue<ArrayList<Integer>> q=new LinkedList<>();
+      ArrayList<Integer> temp=new ArrayList<>();
+       List<List<Pair>> graph=new ArrayList<>();
+       for(int i=0;i<n;i++){
+           graph.add(new ArrayList<>());
+       } 
+       for(int i=0;i<flights.length;i++){
+           int from=flights[i][0];
+           int to=flights[i][1];
+           int wt=flights[i][2];
+           graph.get(from).add(new Pair(to,wt));
+       }
+       temp.add(0);
+       temp.add(src);
+       temp.add(0);
+       q.add(temp);
+       int []dist=new int[n];
+       Arrays.fill(dist,Integer.MAX_VALUE);
+       while(!q.isEmpty()){
+           List<Integer> tem=new ArrayList<>(q.remove());
+           int f=tem.get(0);
+           int t=tem.get(1);
+           int weight=tem.get(2);
+           if(f>k) continue;
+           for(Pair e : graph.get(t)){
+           int adj=e.to;
+           int wt=e.wt;
+            if(wt+weight<dist[t] && f<=k){
+                ArrayList<Integer> G=new ArrayList<>();
+                G.add(f+1);
+                G.add(adj);
+                G.add(wt+weight);
+                q.add(G);
+               dist[adj]=wt+weight;
+           }
+           }
+       }
+       if(dist[dst]==Integer.MAX_VALUE)return -1;
+       return dist[dst];
+    }
+}
