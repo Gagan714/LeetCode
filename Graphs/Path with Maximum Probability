@@ -1,0 +1,42 @@
+class Pair{
+    int node;
+    double weight;
+    Pair(int node,double weight){
+        this.node=node;
+        this.weight=weight;
+    }
+}
+class Solution {
+    public double maxProbability(int n, int[][] edges, double[] succProb, int start_node, int end_node) {
+        List<List<Pair>> graph=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            graph.add(new ArrayList<>());
+        }
+        for(int i=0;i<edges.length;i++){
+            graph.get(edges[i][0]).add(new Pair(edges[i][1],succProb[i]));
+            graph.get(edges[i][1]).add(new Pair(edges[i][0],succProb[i]));
+        }
+       PriorityQueue<Pair> pq = new PriorityQueue<>((x, y) -> Double.compare(y.weight,x.weight));
+        double []dist=new double[n];
+        boolean []vis=new boolean[n];
+        pq.add(new Pair(start_node,1));
+        while(!pq.isEmpty()){
+            int curnode=pq.peek().node;
+            double curwt=pq.peek().weight;
+            pq.remove();
+            vis[curnode]=true;
+            for(int i=0;i<graph.get(curnode).size();i++){
+                int nextnode=graph.get(curnode).get(i).node;
+                double nextweight=graph.get(curnode).get(i).weight;
+                if(!vis[nextnode]){
+                    double newweight=curwt*nextweight;
+                    if(newweight>dist[nextnode]){
+                        dist[nextnode]=newweight;
+                        pq.add(new Pair(nextnode,newweight));
+                    }
+                }
+            }
+        }
+        return dist[end_node];
+    }
+}
