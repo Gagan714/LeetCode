@@ -1,0 +1,42 @@
+class Solution {
+    public int findTheCity(int n, int[][] edges, int distanceThreshold) {
+        int adjmat[][]=new int[n][n];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(i==j){
+                    adjmat[i][j]=0;
+                }else{
+                    adjmat[i][j]=Integer.MAX_VALUE;
+                }
+            }
+        }
+        for(int i=0;i<edges.length;i++){
+            adjmat[edges[i][0]][edges[i][1]]=edges[i][2];
+            adjmat[edges[i][1]][edges[i][0]]=edges[i][2];
+        }
+        for(int k=0;k<n;k++){
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++){
+                    if(adjmat[i][k]!=Integer.MAX_VALUE && adjmat[k][j]!=Integer.MAX_VALUE){
+                   adjmat[i][j]=Math.min(adjmat[i][j],adjmat[i][k]+adjmat[k][j]);
+                    }
+                }
+            }
+        }
+        int mincity=-1;
+        int mincities=Integer.MAX_VALUE;
+        for(int i=0;i<n;i++){
+            int reachable=0;
+            for(int j=0;j<n;j++){
+                if(i!=j && adjmat[i][j]<=distanceThreshold){
+                    reachable++;
+                }
+            }
+            if(reachable<=mincities){
+                mincities=reachable;
+                mincity=i;
+            }
+        }
+        return mincity;
+    }
+}
