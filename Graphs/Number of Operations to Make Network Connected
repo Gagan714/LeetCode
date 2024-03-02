@@ -1,0 +1,52 @@
+class Solution {
+    int extra=0;
+    List<Integer> parent=new ArrayList<>();
+    List<Integer> size=new ArrayList<>();
+    public void unionFind(int n){
+        for(int i=0;i<n;i++){
+            parent.add(i);
+            size.add(1);
+        }
+    }
+    public int find(int u){
+        if(u==parent.get(u)){
+            return u;
+        }
+        int ulp=find(parent.get(u));
+        parent.set(u,ulp);
+        return parent.get(u);
+    }
+    public void union(int u,int v){
+        int pu=find(u);
+        int pv=find(v);
+        if(pu==pv){
+            extra++;
+            return;
+        }
+        if(size.get(pu)<size.get(pv)){
+            parent.set(pu,pv);
+            size.set(pv,size.get(pv)+size.get(pu));
+        }else{
+            parent.set(pv,pu);
+            size.set(pu,size.get(pu)+size.get(pv));
+        }
+    }
+    public int makeConnected(int n, int[][] connections) {
+        if(connections.length<n-1){
+            return -1;
+        }
+        unionFind(n);
+        for(int i=0;i<connections.length;i++){
+            union(connections[i][0],connections[i][1]);
+        }
+        int freq=-1;
+        for(int i=0;i<n;i++){
+            if(find(i)==i){
+                freq++;
+            }
+        }
+        if(extra>=freq)
+            return freq;
+        return -1;
+    }
+}
