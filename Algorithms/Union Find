@@ -1,4 +1,4 @@
-List<Integer> parent=new ArrayList<>();
+    List<Integer> parent=new ArrayList<>();
     List<Integer> size=new ArrayList<>();
     public void unionFind(int n){
         for(int i=0;i<n;i++){
