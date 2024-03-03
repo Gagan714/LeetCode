@@ -1,0 +1,84 @@
+class Solution {
+    List<Integer> parent=new ArrayList<>();
+    List<Integer> size=new ArrayList<>();
+    public void unionFind(int n){
+      for(int i=0;i<n;i++){
+          parent.add(i);
+          size.add(1);
+      }
+    }
+    public int find(int u){
+        if(u==parent.get(u)){
+            return u;
+        }
+        int ulp=find(parent.get(u));
+        parent.set(u,ulp);
+        return parent.get(u);
+    }
+    public boolean valid(int row,int col,int n){
+        if(row<0 || col<0 || row>=n ||col>=n){
+            return false;
+        }
+        return true;
+    }
+    public void union(int u,int v){
+        int pu=find(u);
+        int pv=find(v);
+        if(pu==pv){
+            return;
+        }else if(size.get(pu)<size.get(pv)){
+            parent.set(pu,pv);
+            size.set(pv,size.get(pv)+size.get(pu));
+        }else{
+            parent.set(pv,pu);
+            size.set(pu,size.get(pu)+size.get(pv));
+        }
+    }
+    public int largestIsland(int[][] grid) {
+        int n=grid.length;
+        unionFind(n*n);
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid.length;j++){
+                if(grid[i][j]==1){
+                    int dir1[]={-1,0,1,0};
+                    int dir2[]={0,-1,0,1};
+                    for(int k=0;k<4;k++){
+                        int newr=i+dir1[k];
+                        int newc=j+dir2[k];
+                        if(valid(newr,newc,n) && grid[newr][newc]==1){
+                            int num1=i*n+j;
+                            int num2=newr*n+newc;
+                            union(num1,num2);
+                        }
+                    }
+                }
+            }
+        }
+        int output=0;
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid.length;j++){
+                if(grid[i][j]==0){
+                    int dir1[]={-1,0,1,0};
+                    int dir2[]={0,-1,0,1};
+                    Set<Integer> set=new HashSet<>();
+                    for(int k=0;k<4;k++){
+                        int newr=i+dir1[k];
+                        int newc=j+dir2[k];
+                        if(valid(newr,newc,n) && grid[newr][newc]==1){
+                            set.add(find(newr*n+newc));
+                        }
+                    }
+                int tsize=0;
+                for(Integer in : set){
+                    tsize+=size.get(in);
+                }
+                output=Math.max(output,tsize+1);
+                }
+            }
+        }
+        for(int i=0;i<n*n;i++){
+            output=Math.max(output,size.get(find(i)));
+        }
+        return output;
+    }
+}
