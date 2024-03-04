@@ -39,7 +39,7 @@ class Solution {
     public void addition(TreeNode root,Set<Integer> tree){
         if(root==null){
             return;
-        }
+        } 
         tree.add(root.val);
         addition(root.left,tree);
         addition(root.right,tree);
