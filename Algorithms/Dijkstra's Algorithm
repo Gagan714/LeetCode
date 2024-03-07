@@ -1,0 +1,31 @@
+static class Pair implements Comparable<Pair> {
+        int node;
+        int weight;
+        Pair(int v, int w) {
+            node=v;
+            weight=w;
+        }
+        public int compareTo(Pair other) {
+            return Integer.compare(weight, other.weight);
+        }
+    }
+
+static void dijkstra(List<List<Pair>> graph, int source) {
+        int V = graph.size();
+        int[] dist = new int[V];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[source] = 0;
+        PriorityQueue<Pair> pq=new PriorityQueue<>();
+        pq.add(new Pair(source, 0));
+        while (!pq.isEmpty()) {
+            Pair pair = pq.remove();
+            int u = pair.node;
+            for (Pair neighbor : graph.get(u)) {
+                int v=neighbor.node;
+                int weight=neighbor.weight;
+                if (dist[u] + weight < dist[v]) {
+                    dist[v] = dist[u] + weight;
+                    pq.add(new Pair(v, dist[v]));
+                }
+            }
+}
