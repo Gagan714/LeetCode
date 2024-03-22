@@ -1,0 +1,22 @@
+class Solution {
+    public int maximumSum(int[] nums) {
+        int max=-1;
+        Map<Integer,Integer> map=new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            int a=nums[i];
+            int digits=0;
+            while(a>0){
+                digits+=a%10;
+                a=a/10;
+            }
+            int val=map.getOrDefault(digits,0);
+            if(val<nums[i]){
+                map.put(digits,nums[i]);
+            }
+            if(val!=0){
+                max=Math.max(max,nums[i]+val);
+            }
+        }
+        return max;
+    }
+}
