@@ -1,0 +1,51 @@
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int grid[][]=new int[m][n];
+        int [][] dp=new int[m][n];
+//tabulation
+        dp[0][0]=1;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(i==0 && j==0){
+                    dp[0][0]=1;
+                }else{
+                    int sum=0;
+                    if(valid(grid,i-1,j)){
+                        sum+=dp[i-1][j];
+                    }
+                    if(valid(grid,i,j-1)){
+                        sum+=dp[i][j-1];
+                    }
+                    dp[i][j]=sum;
+                }
+            }
+        }
+        return dp[m-1][n-1];
+//tabulation ends
+//memorization
+        //return add(grid,m-1,n-1,dp);
+    }
+    public int add(int [][]grid,int m,int n,int [][]dp){
+        if(m==0 && n==0){
+            return 1;
+        }
+        if(dp[m][n]!=0){
+            return dp[m][n];
+        }
+        int sum=0;
+        if(valid(grid,m-1,n)){
+            sum+=add(grid,m-1,n,dp);
+        }
+        if(valid(grid,m,n-1)){
+            sum+=add(grid,m,n-1,dp);
+        }
+        return dp[m][n]=sum;
+    }
+//memorization ends
+    public boolean valid(int [][]grid,int row,int column){
+        if(row>grid.length-1 || row<0 ||column>grid[0].length-1 ||column<0){
+            return false;
+        }
+        return true;
+    }
+}
