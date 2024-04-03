@@ -1,0 +1,66 @@
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        if(board.length*board[0].length<word.length()){
+            return false;
+        }
+        int G=0;
+        boolean flag=false;
+        for(int i=0;i<board.length;i++){
+            for(int j=0;j<board[i].length;j++){
+                if(board[i][j]==word.charAt(G)){
+                    boolean vis[][]=new boolean[board.length][board[i].length];
+                    flag=verify(word,board,i,j,vis,G);
+                    if(flag==true){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    public boolean verify(String word,char[][] board,int row,int column,boolean [][]vis,int G){
+        if(G==word.length()-1){
+            return true;
+        }
+        boolean flag=false;
+        vis[row][column]=true;
+        if(valid(board,row+1,column,vis,word,G+1)){
+            flag=verify(word,board,row+1,column,vis,G+1);
+            if(flag==true){
+                return true;
+            }
+        }
+        if(valid(board,row-1,column,vis,word,G+1)){
+            flag=verify(word,board,row-1,column,vis,G+1);
+            if(flag==true){
+                return true;
+            }
+        }
+        if(valid(board,row,column+1,vis,word,G+1)){
+            flag=verify(word,board,row,column+1,vis,G+1);
+            if(flag==true){
+                return true;
+            }
+        }
+        if(valid(board,row,column-1,vis,word,G+1)){
+            flag=verify(word,board,row,column-1,vis,G+1);
+            if(flag==true){
+                return true;
+            }
+        }
+        vis[row][column]=false;
+        return false;
+    }
+    public boolean valid(char [][]board,int row,int column,boolean [][]vis,String word,int G){
+        if(row>board.length-1 ||row<0 || column>board[0].length-1 ||column<0){
+            return false;
+        }
+        if(vis[row][column]==true){
+            return false;
+        }
+        if(word.charAt(G)!=board[row][column]){
+            return false;
+        }
+        return true;
+    }
+}
