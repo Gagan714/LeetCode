@@ -1,0 +1,29 @@
+class Solution {
+    public int minFallingPathSum(int[][] matrix) {
+        int n=matrix.length;
+        int min=100*100; //by seeing constraints 
+        int [][]dp=new int [n][n];
+        for(int i=0;i<matrix[0].length;i++){
+            dp[0][i]=matrix[0][i];
+        }
+        for(int i=1;i<matrix.length;i++){
+            for(int j=0;j<matrix[0].length;j++){
+                int left=min;
+                int center=min;
+                int right=min;
+                    if(j-1>=0){
+                    left=matrix[i][j]+dp[i-1][j-1];
+                    }
+                    if(j+1<matrix.length){
+                        right=matrix[i][j]+dp[i-1][j+1];
+                    }
+                    center=matrix[i][j]+dp[i-1][j];
+                dp[i][j]=Math.min(center,Math.min(left,right));
+            }
+        }
+            for(int i=0;i<matrix[0].length;i++){
+            min=Math.min(min,dp[n-1][i]);
+            }
+        return min;
+        }
+}
