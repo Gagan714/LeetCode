@@ -1,0 +1,32 @@
+class Solution {
+    public boolean checkValidString(String s) {
+        Stack<Integer> stack=new Stack<>();
+        Stack<Integer> star=new Stack<>();
+        int count=0;
+        for(int i=0;i<s.length();i++){
+            char c=s.charAt(i);
+            if(c=='*'){
+                star.push(i);
+            }
+            else if(c=='('){
+                stack.push(i);
+            }
+            else if(c==')'){
+                if(stack.isEmpty() && star.isEmpty()){
+                    return false;
+                }
+                if(!stack.isEmpty()){
+                    stack.pop();
+                }else if(!star.isEmpty()){
+                    star.pop();
+                }
+            }
+        }
+        while(!stack.isEmpty() && !star.isEmpty()){
+            if(stack.pop()>star.pop()){
+                return false;
+            }
+        }
+        return stack.isEmpty();
+    }
+}
