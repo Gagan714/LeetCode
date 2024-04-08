@@ -1,1 +1,43 @@
-
+class Solution {
+    public boolean canPartition(int[] nums) {
+        int target=0;
+        for(int i=0;i<nums.length;i++){
+            target+=nums[i];
+        }
+        if(target%2!=0){
+            return false;
+        }
+        target=target/2;
+        int n=nums.length;
+        boolean dp[][]=new boolean[n][target+1];
+        for(int i=0;i<=target;i++){
+            if(i-nums[0]==0){
+                dp[0][i]=true;
+            }
+        }
+        for(int i=1;i<nums.length;i++){
+            for(int j=0;j<=target;j++){
+                boolean dont=dp[i-1][j];
+                boolean take=false;
+                if(j>=nums[i]){
+                    take=dp[i-1][j-nums[i]];
+                }
+                dp[i][j]=take||dont;
+            }
+        }
+        return dp[n-1][target];
+        //return recurse(n-1,target,nums);
+    }
+    public boolean recurse(int n,int target,int []nums){
+        if(n==0){
+            if(target-nums[0]==0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        boolean dont=recurse(n-1,target,nums);
+        boolean take=recurse(n-1,target-nums[n],nums);
+        return take || dont;
+    }
+}
