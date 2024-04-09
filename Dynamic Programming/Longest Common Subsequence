@@ -1,0 +1,25 @@
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {
+        int t1=text1.length();
+        int t2=text2.length();
+        int dp[][]=new int[t1][t2];
+        for(int i=0;i<t1;i++){
+            for(int j=0;j<t2;j++){
+                dp[i][j]=-1;
+            }
+        }
+        return recurse(t1-1,t2-1,text1,text2,dp);
+    }
+    public int recurse(int t1,int t2,String text1,String text2,int [][]dp){
+        if(t1<0 || t2<0){
+            return 0;
+        }
+        if(dp[t1][t2]!=-1){
+            return dp[t1][t2];
+        }
+        if(text1.charAt(t1)==text2.charAt(t2)){
+                return dp[t1][t2]=1+recurse(t1-1,t2-1,text1,text2,dp);
+            }
+        return dp[t1][t2]=Math.max(recurse(t1-1,t2,text1,text2,dp),recurse(t1,t2-1,text1,text2,dp));
+    }
+}
