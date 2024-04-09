@@ -1,0 +1,26 @@
+class Solution {
+    public int minDistance(String word1, String word2) {
+        int s1=word1.length();
+        int s2=word2.length();
+        int dp[][]=new int[s1][s2];
+        for(int i=0;i<s1;i++){
+            for(int j=0;j<s2;j++){
+                dp[i][j]=-1;
+            }
+        }
+        int lcs=recurse(s1-1,s2-1,word1,word2,dp);
+        return s1+s2-lcs*2; 
+    }
+    public int recurse(int i,int j,String word1,String word2,int [][]dp){
+        if(i<0 || j<0){
+            return 0;
+        }
+        if(dp[i][j]!=-1){
+            return dp[i][j];
+        }
+        if(word1.charAt(i)==(word2.charAt(j))){
+            return dp[i][j]=1+recurse(i-1,j-1,word1,word2,dp);
+        }
+        return dp[i][j]=Math.max(recurse(i-1,j,word1,word2,dp),recurse(i,j-1,word1,word2,dp));
+    }
+}
