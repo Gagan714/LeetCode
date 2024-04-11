@@ -1,0 +1,20 @@
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int dp[][]=new int[nums.length][nums.length+1];
+        return recurse(nums,0,-1,dp);
+    }
+    public int recurse(int []nums,int n,int prev,int dp[][]){
+        if(n==nums.length){
+            return 0;
+        }
+        if(dp[n][prev+1]!=0){
+            return dp[n][prev+1];
+        }
+        int take=-1;
+        if(prev==-1 || nums[n]>nums[prev]){
+            take=1+recurse(nums,n+1,n,dp);
+        }
+        int dont=recurse(nums,n+1,prev,dp);
+        return dp[n][prev+1]=Math.max(take,dont);
+    }
+}
