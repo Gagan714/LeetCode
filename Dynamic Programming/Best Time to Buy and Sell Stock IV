@@ -1,0 +1,30 @@
+class Solution {
+    public int maxProfit(int k, int[] prices) {
+        int dp[][][]=new int[prices.length+1][2][k+1];
+        for(int i=prices.length-1;i>=0;i--){
+            for(int j=0;j<2;j++){
+                for(int g=1;g<=k;g++){
+                   if(j==1){
+                    dp[i][j][g]=Math.max(-prices[i]+dp[i+1][0][g],dp[i+1][1][g]);
+                    }else{
+                    dp[i][j][g]=Math.max(prices[i]+dp[i+1][1][g-1],dp[i+1][0][g]); 
+                    }
+                }
+            }
+        }
+        return dp[0][1][k];
+        //return recurse(0,1,prices,k);
+    }
+    public int recurse(int ind,int buy,int []prices,int k){
+        if(k==0){
+            return 0;
+        }
+        if(ind==prices.length){
+            return 0;
+        }
+        if(buy==1){
+            return Math.max(-prices[ind]+recurse(ind+1,0,prices,k),recurse(ind+1,1,prices,k));
+        }
+        return Math.max(prices[ind]+recurse(ind+1,1,prices,k-1),recurse(ind+1,0,prices,k));
+    }
+}
