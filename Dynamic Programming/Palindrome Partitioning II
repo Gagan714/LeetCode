@@ -1,0 +1,34 @@
+class Solution {
+    public int minCut(String s) {
+        int [][]dp=new int[s.length()][s.length()];
+        for(int i=0;i<s.length();i++){
+            for(int j=0;j<s.length();j++){
+                dp[i][j]=-1;
+            }
+        }
+        return recurse(0,s.length()-1,s,dp);
+    }
+    public int recurse(int i,int j,String s,int [][]dp){
+        if(i==j || isPalindrome(i,j,s)){
+            return 0;
+        }
+        if(dp[i][j]!=-1){
+            return dp[i][j];
+        }
+        int min=Integer.MAX_VALUE;
+        for(int k=i;k<j;k++){
+            if(isPalindrome(i,k,s)){
+                min=Math.min(1+recurse(k+1,j,s,dp),min);
+            }
+        }
+        return dp[i][j]=min;
+    }
+    public boolean isPalindrome(int i,int j,String s){
+        while(i<j){
+            if(s.charAt(i++)!=s.charAt(j--)){
+                return false;
+            }
+        }
+        return true;
+    }
+}
