@@ -1,0 +1,46 @@
+class Solution {
+    int count=0;
+    public int islandPerimeter(int[][] grid) {
+       boolean vis[][]=new boolean[grid.length][grid[0].length];
+       for(int i=0;i<grid.length;i++){
+        for(int j=0;j<grid[0].length;j++){
+            if(grid[i][j]==1){
+               dfs(grid,vis,i,j);
+            }
+        }
+       }
+     return count;
+    }
+    public void dfs(int [][]grid,boolean [][]vis,int i,int j){
+        if(vis[i][j]==true){
+            return;
+        }
+        vis[i][j]=true;
+        if(valid(grid,i+1,j)){
+            dfs(grid,vis,i+1,j);
+        }else{
+            count++;
+        }
+        if(valid(grid,i-1,j)){
+            dfs(grid,vis,i-1,j);
+        }else{
+            count++;
+        }
+        if(valid(grid,i,j+1)){
+            dfs(grid,vis,i,j+1);
+        }else{
+            count++;
+        }
+        if(valid(grid,i,j-1)){
+            dfs(grid,vis,i,j-1);
+        }else{
+            count++;
+        }
+    }
+    public boolean valid(int [][]grid,int i,int j){
+        if(i==grid.length || i<0 || j==grid[0].length || j<0 || grid[i][j]==0){
+            return false;
+        }
+        return true;
+    }
+}
