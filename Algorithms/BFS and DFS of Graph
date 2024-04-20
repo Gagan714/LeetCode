@@ -1,3 +1,4 @@
+//language:Java
 public void dfs(List<List<Integer>> graph, boolean[] vis, int src) {
     vis[src] = true;
     for (int i = 0; i < graph.get(src).size(); i++) {
