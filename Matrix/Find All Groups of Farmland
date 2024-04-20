@@ -1,0 +1,33 @@
+class Solution {
+    public int[][] findFarmland(int[][] land) {
+        List<int[]> list=new ArrayList<>();
+        for(int i=0;i<land.length;i++){
+            for(int j=0;j<land[0].length;j++){
+                if(land[i][j]==1){
+                    int[] farm=new int[]{Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MIN_VALUE,Integer.MIN_VALUE};
+                    recurse(land,i,j,farm);
+                    list.add(farm);
+                }
+            }
+        }
+            int [][]output=new int[list.size()][4];
+            for(int i=0;i<list.size();i++){
+                    output[i]=list.get(i);
+                }
+        return output;    
+    }
+    public void recurse(int [][]land,int i,int j,int []farm){
+        if(i==land.length || i<0 || j==land[0].length ||j<0 || land[i][j]==0){
+            return;
+        }
+        farm[0]=Math.min(i,farm[0]);
+        farm[1]=Math.min(j,farm[1]);
+        farm[2]=Math.max(i,farm[2]);
+        farm[3]=Math.max(j,farm[3]);
+        land[i][j]=0;
+        recurse(land,i+1,j,farm);
+        recurse(land,i-1,j,farm);
+        recurse(land,i,j+1,farm);
+        recurse(land,i,j-1,farm);
+    }
+}
