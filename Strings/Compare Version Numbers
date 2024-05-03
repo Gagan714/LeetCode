@@ -1,0 +1,24 @@
+class Solution {
+    public int compareVersion(String version1, String version2) {
+        String v1[]=version1.split("\\.");
+        String v2[]=version2.split("\\.");
+        int max=Math.max(v1.length,v2.length);
+        for(int i=0;i<max;i++){
+            int ver1=0;
+            int ver2=0;
+            if(i<v1.length){
+                ver1=Integer.parseInt(v1[i]);
+            }
+            if(i<v2.length){
+                ver2=Integer.parseInt(v2[i]);
+            }
+            if(ver1<ver2){
+                return -1;
+            }
+            if(ver1>ver2){
+                return 1;
+            }
+        }
+        return 0;
+    }
+}
