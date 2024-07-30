@@ -1,0 +1,30 @@
+class Solution {
+    long dp[][];
+        long mod= 1000000007;
+    public int numWays(int steps, int arrLen) {
+        dp=new long[505][505];
+        for(int i=0;i<dp.length;i++){
+            for(int j=0;j<dp[0].length;j++){
+                dp[i][j]=-1;
+            }
+        }
+       return (int)(recurse(steps,arrLen,0)%mod);
+    }
+    public long recurse(int steps,int len,int num){
+        if(steps==0){
+            if(num==0){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        }
+        if(dp[steps][num]!=-1){
+            return dp[steps][num]%mod;
+        }
+        long a=(num-1>=0)?recurse(steps-1,len,num-1)%mod:0;
+        long b=(num+1<len)?recurse(steps-1,len,num+1)%mod:0;
+        long c=recurse(steps-1,len,num)%mod;
+        return dp[steps][num]=(a%mod+b%mod+c%mod)%mod;
+    }
+}
