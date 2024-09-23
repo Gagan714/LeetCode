@@ -1,0 +1,28 @@
+class Solution {
+    public int minOperations(List<Integer> nums, int target) {
+        PriorityQueue<Integer> pq=new PriorityQueue<>(Comparator.reverseOrder());
+        long sum=0;
+        int count=0;
+        for(int i=0;i<nums.size();i++){
+            pq.add(nums.get(i));
+            sum+=nums.get(i);
+        }
+        if(sum<target){
+            return -1;
+        }
+        while(!pq.isEmpty()){
+            int val=pq.poll();
+            sum-=(long)val;
+            if(val<=target){
+                target-=val;
+            }
+            else if(val>target && sum<target){
+                count++;
+                pq.add(val/2);
+                pq.add(val/2);
+                sum+=val;
+            }
+        }
+        return count;
+    }
+}
