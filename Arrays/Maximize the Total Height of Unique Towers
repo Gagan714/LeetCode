@@ -1,0 +1,24 @@
+class Solution {
+    public long maximumTotalSum(int[] maximumHeight) {
+        long output=0;
+        Set<Integer> set=new HashSet<>();
+        Arrays.sort(maximumHeight);
+        int previous=maximumHeight[maximumHeight.length-1];
+        for(int i=maximumHeight.length-1;i>=0;i--){
+            int num=maximumHeight[i];
+            if(num>previous){
+                num=previous;
+            }
+            while(set.contains(num) && num>0){
+                num--;
+            }
+            if(num<=0){
+                return -1;
+            }
+            set.add(num);
+            output+=num;
+            previous=num;
+        }
+        return output;
+    }
+}
