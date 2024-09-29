@@ -1,0 +1,20 @@
+class Solution {
+    public char kthCharacter(int k) {
+        StringBuilder sb = new StringBuilder();
+        sb.append('a');
+        while(sb.length()<k){
+            StringBuilder sb2 = new StringBuilder();
+            for(int i=0;i<sb.length();i++){
+                char ch=sb.charAt(i);
+                if(ch=='z'){
+                    sb2.append('a');
+                }else{
+                sb2.append((char)(ch+1));
+                }
+            }
+            sb.append(sb2);
+        }
+        String output=sb.toString();
+        return output.charAt(k-1);
+    }
+}
