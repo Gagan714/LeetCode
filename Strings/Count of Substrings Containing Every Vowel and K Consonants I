@@ -1,0 +1,28 @@
+class Solution {
+    public int countOfSubstrings(String word, int k) {
+        List<String> substrings = new ArrayList<>();
+        int n = word.length();
+        int output=0;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j <= n; j++) {
+                substrings.add(word.substring(i, j));
+            }
+        }
+        for(int i=0;i<substrings.size();i++){
+            String word2=substrings.get(i);
+            if (word2.contains("a") && word2.contains("e") && word2.contains("i") && word2.contains("o") && word2.contains("u")) {
+                int con=0;
+    for(int j=0;j<word2.length();j++){
+        char ch=word2.charAt(j);
+        if(ch!='a' && ch!='e' && ch!='i'&& ch!='o' && ch!='u' ){
+            con++;
+        }
+    }
+    if(con==k){
+        output++;
+    }
+}
+        }
+        return output;
+    }
+}
