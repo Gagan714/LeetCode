@@ -1,0 +1,41 @@
+class Solution {
+    public int[] findPeakGrid(int[][] mat) {
+        HashMap<Integer,int []> map=new HashMap<>();
+        PriorityQueue<Integer> pq=new PriorityQueue<>(Comparator.reverseOrder());
+        for(int i=0;i<mat.length;i++){
+            for(int j=0;j<mat[i].length;j++){
+                map.put(mat[i][j],new int[]{i,j});
+                pq.add(mat[i][j]);
+            }
+        }
+        while(!pq.isEmpty()){
+            int numb=pq.remove();
+            int []num=map.get(numb);
+            int i=num[0];
+            int j=num[1];
+            if(check(i,j,numb,mat)){
+                return num;
+            }
+        }
+        return new int[2];
+    }
+    public boolean check(int i,int j,int numb,int [][]mat){
+        boolean a1=find(i-1,j,numb,mat);
+        boolean a2=find(i+1,j,numb,mat);
+        boolean a3=find(i,j-1,numb,mat);
+        boolean a4=find(i,j+1,numb,mat);
+        if(a1 && a2 && a3 && a4){
+            return true;
+        }
+        return false;
+    }
+    public boolean find(int i,int j,int numb,int [][]mat){
+        if(i<0 || j<0 || j>=mat[0].length || i>=mat.length){
+            return true;
+        }
+        if(numb>mat[i][j]){
+            return true;
+        }
+        return false;
+    }
+}
