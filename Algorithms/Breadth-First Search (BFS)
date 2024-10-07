@@ -1,0 +1,21 @@
+// Purpose: To traverse or search through graph layers, visiting all neighbors at the present depth before moving on to nodes at the next depth level.
+// When to Use: Shortest path in unweighted graphs, finding connected components.
+void bfs(List<List<Integer>> graph, int start, boolean[] visited) {
+    Queue<Integer> queue = new LinkedList<>();
+
+    visited[start] = true;
+    queue.add(start);
+
+    while (!queue.isEmpty()) {
+        int node = queue.poll();
+        System.out.print(node + " ");
+
+        for (int neighbor : graph.get(node)) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                queue.add(neighbor);
+            }
+        }
+    }
+}
+
