@@ -1,4 +1,13 @@
-    List<Integer> parent=new ArrayList<>();
+// Purpose:
+// The Union-Find algorithm keeps track of a set of elements partitioned into disjoint (non-overlapping) subsets. It efficiently supports two main operations:
+// Find: Determine which subset a particular element belongs to.
+// Union: Merge two subsets into one.
+// Use Cases:
+// Checking if two elements are in the same group.
+// Kruskal’s algorithm for finding Minimum Spanning Trees (MST).
+// Managing connectivity in dynamic networks.
+
+List<Integer> parent=new ArrayList<>();
     List<Integer> size=new ArrayList<>();
     public void unionFind(int n){
         for(int i=0;i<n;i++){
