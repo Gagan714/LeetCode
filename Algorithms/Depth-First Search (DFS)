@@ -1,0 +1,22 @@
+// Purpose: To traverse or search through a graph by going as deep as possible down one path before backtracking.
+// When to Use: Pathfinding, topological sorting, connected components.
+void dfs(List<List<Integer>> graph, int node, boolean[] visited) {
+    visited[node] = true;
+    System.out.print(node + " ");
+    
+    for (int neighbor : graph.get(node)) {
+        if (!visited[neighbor]) {
+            dfs(graph, neighbor, visited);
+        }
+    }
+}
+
+// Wrapper for DFS
+void dfsWrapper(List<List<Integer>> graph) {
+    boolean[] visited = new boolean[graph.size()];
+    for (int i = 0; i < graph.size(); i++) {
+        if (!visited[i]) {
+            dfs(graph, i, visited);
+        }
+    }
+}
