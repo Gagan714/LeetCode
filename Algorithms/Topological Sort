@@ -1,0 +1,27 @@
+// Purpose: To order vertices in a Directed Acyclic Graph (DAG) such that for every directed edge UV from vertex U to vertex V, U comes before V in the ordering.
+// When to Use: Scheduling tasks based on prerequisites.
+void topologicalSortUtil(List<List<Integer>> graph, int node, boolean[] visited, Stack<Integer> stack) {
+    visited[node] = true;
+    
+    for (int neighbor : graph.get(node)) {
+        if (!visited[neighbor]) {
+            topologicalSortUtil(graph, neighbor, visited, stack);
+        }
+    }
+    stack.push(node);
+}
+
+void topologicalSort(List<List<Integer>> graph) {
+    Stack<Integer> stack = new Stack<>();
+    boolean[] visited = new boolean[graph.size()];
+    
+    for (int i = 0; i < graph.size(); i++) {
+        if (!visited[i]) {
+            topologicalSortUtil(graph, i, visited, stack);
+        }
+    }
+    
+    while (!stack.isEmpty()) {
+        System.out.print(stack.pop() + " ");
+    }
+}
