@@ -1,0 +1,22 @@
+class Solution {
+    public List<String> removeSubfolders(String[] folder) {
+        List<String> list=new ArrayList<>();
+        Arrays.sort(folder, Comparator.comparingInt(String::length));
+        for(int i=0;i<folder.length;i++){
+            String s=folder[i];
+            boolean c=false;
+            for(int j=0;j<s.length();j++){
+                if(s.charAt(j)=='/'){
+                    if(list.contains(s.substring(0,j))){
+                        c=true;
+                        break;
+                    }
+                }
+            }
+            if(!c){
+                list.add(s);
+            }
+        }
+        return list;
+    }
+}
