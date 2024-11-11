@@ -1,0 +1,21 @@
+class Solution {
+    public boolean canMakeSubsequence(String str1, String str2) {
+        String st="zabcdefghijklmnopqrstuvwxyz";
+        StringBuilder increment=new StringBuilder();
+        for(int i=0;i<str1.length();i++){
+            char c=str1.charAt(i);
+            int index=st.indexOf(c);
+            increment.append(st.charAt(index+1));
+        }
+        String str3=increment.toString();
+        int g=0;
+        int m=0;
+        while(g<str2.length() && m<str1.length()){
+            if(str2.charAt(g)==str1.charAt(m) || str2.charAt(g)==str3.charAt(m)){
+                g++;
+            }
+            m++;
+        }
+        return g==str2.length();
+    }
+}
