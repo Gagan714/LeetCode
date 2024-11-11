@@ -1,0 +1,31 @@
+class Solution {
+    public boolean primeSubOperation(int[] nums) {
+        int prev=0;
+        for(int i=0;i<nums.length;i++){
+            int num=find(nums[i]-1,prev,nums[i]);
+            nums[i]=nums[i]-num;
+            if(nums[i]<=prev){
+                return false;
+            }
+            prev=nums[i];
+        }
+        return true;
+    }
+    public int find(int n,int prev,int num){
+        while(n>=2){
+            if(prime(n) && num-n>prev){
+                return n;
+            }
+            n--;
+        }
+        return 0;
+    }
+    public boolean prime(int num){
+        for(int i=2;i*i<=num;i++){
+            if(num%i==0){
+                return false;
+            }
+        }
+        return true;
+    }
+}
