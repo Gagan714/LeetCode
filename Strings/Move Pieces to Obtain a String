@@ -1,0 +1,42 @@
+class Solution {
+    public boolean canChange(String start, String target) {
+        int i=0;
+        int j=0;
+        int l=0;
+        int r=0;
+        for(int g=0;g<start.length();g++){
+            if(start.charAt(g)!='_'){
+                l++;
+            }
+            if(target.charAt(g)!='_'){
+                r++;
+            }
+        }
+        if(l!=r){
+            return false;
+        }
+        while(i<start.length() && j<target.length()){
+            while(i<start.length() && start.charAt(i)=='_'){
+                i++;
+            }
+            while(j<target.length() && target.charAt(j)=='_'){
+                j++;
+            }
+            if(i==start.length() || j==start.length()){
+                break;
+            }
+            if(start.charAt(i)!=target.charAt(j)){
+                return false;
+            }
+            if(start.charAt(i)=='L' && i<j){
+                return false;
+            }
+            if(start.charAt(i)=='R' && j<i){
+                return false;
+            }
+            i++;
+            j++;
+        }
+        return true;
+    }
+}
