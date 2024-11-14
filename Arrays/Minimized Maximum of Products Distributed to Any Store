@@ -1,0 +1,29 @@
+class Solution {
+    public int minimizedMaximum(int n, int[] quantities) {
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<quantities.length;i++){
+            max=Math.max(max,quantities[i]);
+        }
+        int a=0;
+        int output=-1;
+        while(a<=max){
+            int mid=a+(max-a)/2;
+            if(check(mid,n,quantities)){
+                output=mid;
+                max=mid-1;
+            }else{
+                a=mid+1;
+            }
+        }
+        return output;
+    }
+    public boolean check(int num,int n,int []quantities){
+        for(int i=0;i<quantities.length;i++){
+            n-=(int)Math.ceil((double)quantities[i]/num);
+            if(n<0){
+                return false;
+            }
+        }
+        return true;
+    }
+}
