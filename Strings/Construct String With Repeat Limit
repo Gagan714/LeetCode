@@ -1,0 +1,32 @@
+class Solution {
+    public String repeatLimitedString(String s, int repeatLimit) {
+        int frq[]=new int[26];
+        StringBuilder sb=new StringBuilder();
+        for(int i=0;i<s.length();i++){
+            frq[s.charAt(i)-'a']++;
+        }
+        String alpha="abcdefghijklmnopqrstuvwxyz";
+        for(int i=25;i>=0;i--){
+            while(frq[i]>0){
+                if(sb.length()>0 && sb.charAt(sb.length()-1)==alpha.charAt(i)){
+                    break;
+                }
+                int min=Math.min(frq[i],repeatLimit);
+                for(int j=0;j<min;j++){
+                    sb.append(alpha.charAt(i));
+                }
+                frq[i]-=min;
+                if(frq[i]>0){
+                for(int k=i-1;k>=0;k--){
+                    if(frq[k]>0){
+                        sb.append(alpha.charAt(k));
+                        frq[k]--;
+                        break;
+                    }
+                }
+                }
+            }
+        }
+        return sb.toString();
+    }
+}
