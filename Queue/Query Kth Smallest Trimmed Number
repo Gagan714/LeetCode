@@ -1,0 +1,33 @@
+
+import java.math.BigInteger;
+class Solution {
+    public int[] smallestTrimmedNumbers(String[] nums, int[][] queries) {
+        int[] output = new int[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            int k = queries[i][0];
+            int trim = queries[i][1];
+            
+            PriorityQueue<BigInteger[]> pq = new PriorityQueue<>((a, b) -> {
+                int compareVal = a[0].compareTo(b[0]);
+                return compareVal == 0 ? a[1].compareTo(b[1]) : compareVal;
+            });
+            
+            for (int j = 0; j < nums.length; j++) {
+                int n = nums[j].length();
+                String trimmedStr = nums[j].substring(n - trim);
+                BigInteger num = new BigInteger(trimmedStr);
+                pq.add(new BigInteger[]{num, BigInteger.valueOf(j)});
+            }
+            
+            while (k > 1) {
+                pq.poll();
+                k--;
+            }
+            
+            BigInteger[] ma = pq.poll();
+            output[i] = ma[1].intValue();
+        }
+        
+        return output;
+    }
+}
