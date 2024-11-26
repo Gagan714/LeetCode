@@ -1,0 +1,19 @@
+class Solution {
+    public boolean isPossibleToRearrange(String s, String t, int k) {
+       int n=s.length()/k;
+        HashMap<String, Integer> tcount=new HashMap<>();
+        for (int i=0;i<=t.length()-n;i+=n) {
+            String sub=t.substring(i,i + n);
+            tcount.put(sub,tcount.getOrDefault(sub, 0) + 1);
+        }
+        for(int i=0;i<=s.length()-n;i+=n){
+            String str=s.substring(i,i+n);
+            
+            if(tcount.get(str)==null || tcount.get(str)==0){
+                return false;
+            }
+            tcount.put(str,tcount.get(str)-1);
+        }
+        return true;
+    }
+}
