@@ -1,0 +1,26 @@
+class Solution {
+    public long shiftDistance(String s, String t, int[] nextCost, int[] previousCost) {
+       long output=0;
+        for(int i=0;i<s.length();i++){
+            int a=s.charAt(i)-'a';
+             int b=t.charAt(i)-'a';
+            if(a==b){
+                continue;
+            }
+            long next=0;
+            long back=0;
+            int index=a;
+            while(index!=b){
+                next+=nextCost[index];
+                index=(index+1)%26;
+            }
+            index=a;
+             while(index!=b){
+                back+=previousCost[index];
+                index=(index-1+26)%26;
+            }
+            output+=Math.min(next,back);
+        }
+        return output;
+    }
+}
