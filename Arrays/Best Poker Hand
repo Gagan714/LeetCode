@@ -1,0 +1,25 @@
+class Solution {
+    public String bestHand(int[] ranks, char[] suits) {
+        boolean output=true;
+        for(int i=0;i<suits.length-1;i++){
+            if(suits[i]!=suits[i+1]){
+                output=false;
+            }
+        }
+        if(output){
+            return "Flush";
+        }
+        int arr[]=new int[14];
+        for(int i=0;i<ranks.length;i++){
+            arr[ranks[i]]++;
+        }
+        Arrays.sort(arr);
+        if(arr[13]>=3){
+            return "Three of a Kind";
+        }
+        if(arr[13]==2){
+            return "Pair";
+        }
+        return "High Card";
+    }
+}
