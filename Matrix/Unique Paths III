@@ -1,0 +1,47 @@
+class Solution {
+    int output=0;
+    public int uniquePathsIII(int[][] grid) {
+        int count=0;
+        int starti=-1;
+        int endi=-1;
+        int startj=-1;
+        int endj=-1;
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(grid[i][j]==-1){
+                    count++;
+                }
+                if(grid[i][j]==1){
+                    starti=i;
+                    startj=j;
+                }
+                if(grid[i][j]==2){
+                    endi=i;
+                    endj=j;
+                }
+            }
+        }
+        int required=(grid.length*grid[0].length)-count;
+        count=1;
+        int vis[][]=new int[grid.length][grid[0].length];
+        traverse(grid,starti,startj,endi,endj,required,count,vis);
+        return output;
+    }
+    public void traverse(int [][]grid,int starti,int startj,int endi,int endj,int required,int count,int [][]vis){
+        if(starti<0 || starti>=grid.length || startj<0 || startj>=grid[0].length || vis[starti][startj]==1 || grid[starti][startj]==-1){
+            return;
+        }
+        if(starti==endi && startj==endj){
+           if(count==required) {
+            output++;
+           }
+            return;
+        }
+        vis[starti][startj]=1;
+        traverse(grid,starti+1,startj,endi,endj,required,count+1,vis);
+        traverse(grid,starti-1,startj,endi,endj,required,count+1,vis);
+        traverse(grid,starti,startj+1,endi,endj,required,count+1,vis);
+        traverse(grid,starti,startj-1,endi,endj,required,count+1,vis);
+        vis[starti][startj]=0;
+    }
+}
