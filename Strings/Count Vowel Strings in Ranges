@@ -1,0 +1,25 @@
+class Solution {
+    public int[] vowelStrings(String[] words, int[][] queries) {
+        int []count=new int[words.length];
+        String vowel="aeiou";
+        int sum=0;
+        for(int i=0;i<words.length;i++){
+            String word=words[i];
+            if(vowel.contains(word.charAt(0)+"") && vowel.contains(word.charAt(word.length()-1)+"")){
+                sum++;
+            }
+            count[i]=sum;
+        }
+        int output[]=new int[queries.length];
+        for(int i=0;i<queries.length;i++){
+            int left=0;
+            int right=0;
+            if(queries[i][0]!=0){
+                left=count[queries[i][0]-1];
+            }
+            right=count[queries[i][1]];
+            output[i]=right-left;
+        }
+        return output;
+    }
+}
