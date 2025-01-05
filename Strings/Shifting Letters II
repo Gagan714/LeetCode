@@ -1,0 +1,33 @@
+class Solution {
+    public String shiftingLetters(String s, int[][] shifts) {
+        int line[]=new int[s.length()+1];
+        for(int i=0;i<shifts.length;i++){
+            int start=shifts[i][0];
+            int end=shifts[i][1];
+            int shift=shifts[i][2];
+            if(shift==1){
+                line[start]+=1;
+                line[end+1]-=1;
+            }else{
+                line[start]-=1;
+                line[end+1]+=1;
+            }
+        }
+        int prefix[]=new int[s.length()];
+        int current=0;
+        for(int i=0;i<s.length();i++){
+            current+=line[i];
+            prefix[i]=current;
+        }
+        StringBuilder sb=new StringBuilder();
+        for(int i=0;i<s.length();i++){
+            int c=s.charAt(i)-'a';
+            int totalShift=(c+prefix[i])%26;
+            if(totalShift<0){
+                totalShift+=26; // if the shift is negative
+            }
+            sb.append((char)('a'+totalShift));
+        }
+        return sb.toString();
+    }
+}
