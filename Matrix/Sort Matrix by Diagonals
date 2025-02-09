@@ -1,0 +1,46 @@
+class Solution {
+    public int[][] sortMatrix(int[][] grid) {
+        int n=grid.length;
+        PriorityQueue<Integer> pq=new PriorityQueue<>(Collections.reverseOrder());
+        for(int i=0;i<n;i++){
+            pq.add(grid[i][i]);
+        }
+        for(int i=0;i<n;i++){
+            grid[i][i]=pq.remove();
+        }
+        for(int i=1;i<n;i++){
+            int row=i;
+            int col=0;
+            while(row<n && col<n){
+                pq.add(grid[row][col]);
+                row++;
+                col++;
+            }
+            row=i;
+            col=0;
+            while(row<n && col<n){
+                grid[row][col]=pq.remove();
+                row++;
+                col++;
+            }
+        }
+        PriorityQueue<Integer> pq2=new PriorityQueue<>();
+        for(int i=1;i<n;i++){
+            int row=0;
+            int col=i;
+            while(row<n && col<n){
+                pq2.add(grid[row][col]);
+                row++;
+                col++;
+            }
+            row=0;
+            col=i;
+            while(row<n && col<n){
+                grid[row][col]=pq2.remove();
+                row++;
+                col++;
+            }
+        }
+        return grid;
+    }
+}
