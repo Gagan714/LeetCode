@@ -1,0 +1,21 @@
+class Solution {
+    public boolean checkPowersOfThree(int n) {
+        List<Integer> list=new ArrayList<>();
+        list.add(1);
+        int g=3;
+        while(g<=n){
+            list.add(g);
+            g*=3;
+        }
+        return recurse(0,list,0,n);
+    }
+    public boolean recurse(int sum,List<Integer> list,int i,int n){
+        if(sum==n){
+            return true;
+        }
+        if(i==list.size() || sum>n){
+            return false;
+        }
+        return recurse(sum,list,i+1,n) || recurse(sum+list.get(i),list,i+1,n); 
+    }
+}
