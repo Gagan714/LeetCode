@@ -1,0 +1,64 @@
+//Tabulation
+class Solution {
+    int mod=1000000007;
+    public int countPaths(int[][] grid) {
+        int dp[][]=new int[grid.length][grid[0].length];
+        int cells[][]=new int[grid.length*grid[0].length][2];
+        int index=0;
+        int sum=0;
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                cells[index++]=new int[]{i,j};
+            }
+        }
+        Arrays.sort(cells,Comparator.comparingInt(a->grid[a[0]][a[1]]));
+        int directions[][]={{0,1},{0,-1},{1,0},{-1,0}};
+        for(int []cell:cells ){
+            int i=cell[0];
+            int j=cell[1];
+            dp[i][j]=1;
+            for(int []dir:directions){
+                int ni=i+dir[0];
+                int nj=j+dir[1];
+                if(ni>=0 && ni<grid.length && nj>=0 && nj<grid[0].length && grid[ni][nj]<grid[i][j]){
+                    dp[i][j]=(dp[i][j]+dp[ni][nj])%mod;
+                }
+            }
+            sum=(sum+dp[i][j])%mod;
+        }
+        return sum;
+    }
+}
+//Memorization
+class Solution {
+    int mod=1000000007;
+    public int countPaths(int[][] grid) {
+        int dp[][]=new int[grid.length][grid[0].length];
+        int sum=0;
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                boolean visited[][]=new boolean[grid.length][grid[0].length];
+                sum=(sum+recurse(grid,i,j,dp,0,visited))%mod;
+            }
+        }
+        return sum;
+    }
+    public int recurse(int [][]grid,int i,int j,int [][]dp,int prev,boolean [][]visited){
+        if(i==grid.length || i<0 || j<0 || j==grid[0].length || visited[i][j]){
+            return 0;
+        }
+        if(grid[i][j]<=prev){
+            return 0;
+        }
+        if(dp[i][j]!=0){
+            return dp[i][j];
+        }
+        visited[i][j]=true;
+        int left=recurse(grid,i,j-1,dp,grid[i][j],visited);
+        int right=recurse(grid,i,j+1,dp,grid[i][j],visited);
+        int top=recurse(grid,i-1,j,dp,grid[i][j],visited);
+        int down=recurse(grid,i+1,j,dp,grid[i][j],visited);
+        visited[i][j]=false;
+        return dp[i][j]=(1+left+right+top+down)%mod;
+    }
+}
