@@ -1,0 +1,38 @@
+class Solution {
+    public int[] closestPrimes(int left, int right) {
+        int output[]=new int[2];
+        Arrays.fill(output,-1);
+        int min=Integer.MAX_VALUE;
+        int prev=-1;
+        for(int i=left;i<=right;i++){
+            if(isPrime(i)){
+                if(prev!=-1){
+                    if(i-prev<min){
+                        output[0]=prev;
+                        output[1]=i;
+                        min=i-prev;
+                    }
+                }
+                prev=i;
+            }
+        }
+        return output;
+    }
+    public boolean isPrime(int n){
+        if(n<2){
+            return false;
+        }
+        if(n==2 || n==3){
+            return true;
+        }
+        if(n%2==0 || n%3==0){
+            return false;
+        }
+        for(int i=5;i*i<=n;i+=6){
+            if(n%i==0 || n%(i+2)==0){
+                return false;
+            }
+        }
+        return true;
+    }
+}
