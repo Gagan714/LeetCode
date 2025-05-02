@@ -1,0 +1,43 @@
+class Solution {
+    public String pushDominoes(String dominoes) {
+        int leftArray[]=new int[dominoes.length()];
+        int rightArray[]=new int[dominoes.length()];
+        int count=Integer.MAX_VALUE;
+        for(int index = 0; index < dominoes.length(); index++){
+            if(dominoes.charAt(index)=='R'){
+                rightArray[index]=0;
+                count=1;
+            }else if(dominoes.charAt(index)=='L'){
+                rightArray[index]=Integer.MAX_VALUE;
+                count=Integer.MAX_VALUE;
+            }else{
+                rightArray[index]=count;
+                if(count<Integer.MAX_VALUE) count++;
+            }
+        }
+        count=Integer.MAX_VALUE;
+        for(int index=dominoes.length()-1; index >= 0; index--){
+            if(dominoes.charAt(index)=='L'){
+                leftArray[index]=0;
+                count=1;
+            }else if(dominoes.charAt(index)=='R'){
+                leftArray[index]=Integer.MAX_VALUE;
+                count=Integer.MAX_VALUE;
+            }else{
+                leftArray[index]=count;
+                if(count<Integer.MAX_VALUE) count++;
+            }
+        }
+        StringBuilder sb=new StringBuilder();
+        for(int index = 0; index < dominoes.length(); index++){
+            if(leftArray[index]==rightArray[index]){
+                sb.append(".");
+            }else if(leftArray[index]<rightArray[index]){
+                sb.append("L");
+            }else{
+                sb.append("R");
+            }
+        }
+        return sb.toString();
+    }
+}
