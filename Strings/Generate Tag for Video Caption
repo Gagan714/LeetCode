@@ -1,0 +1,34 @@
+class Solution {
+    public String generateTag(String caption) {
+        String arr[]=caption.trim().split("\\s+");
+        StringBuilder sb=new StringBuilder();
+        sb.append("#");
+        String m=arr[0];
+        for(int i=0;i<m.length();i++){
+            if(sb.length()<100){
+            sb.append(Character.toLowerCase(m.charAt(i)));
+            }else{
+                return sb.toString();
+            }
+        }
+        if(sb.length()<100){
+        for(int i=1;i<arr.length;i++){
+            String g=arr[i];
+            if(sb.length()<100){
+            sb.append(Character.toUpperCase(g.charAt(0)));
+            }else{
+                return sb.toString();
+            }
+            for(int j=1;j<g.length();j++){
+                if(sb.length()<100){
+                sb.append(Character.toLowerCase(g.charAt(j)));
+                }else{
+                    return sb.toString();
+                }
+            }
+        }
+        }
+            
+        return sb.toString();
+    }
+}
