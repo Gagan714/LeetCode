@@ -1,40 +1,48 @@
-public void mergeSort(int[] array) {
-        if (array == null || array.length <= 1) {
-            return;
-        }
-        int[] temp = new int[array.length];
-        mergeSort(array, temp, 0, array.length - 1);
+import java.util.Arrays;
+
+public class MergeSort {
+    public static void mergeSort(int[] arr, int start, int end) {
+        if (start >= end) return; // Base case
+
+        int mid = start + (end - start) / 2;
+
+        mergeSort(arr, start, mid);       // Sort left half
+        mergeSort(arr, mid + 1, end);     // Sort right half
+
+        merge(arr, start, mid, end);      // Merge sorted halves
     }
 
-    private void mergeSort(int[] array, int[] temp, int left, int right) {
-        if (left < right) {
-            int middle = (left + right) / 2;
-            mergeSort(array, temp, left, middle);
-            mergeSort(array, temp, middle + 1, right);
-            merge(array, temp, left, middle, right);
-        }
-    }
+    public static void merge(int[] arr, int start, int mid, int end) {
+        int[] merged = new int[end - start + 1];
+        int i = start;     // pointer for left half
+        int j = mid + 1;   // pointer for right half
+        int k = 0;         // pointer for merged array
 
-    private void merge(int[] array, int[] temp, int left, int middle, int right) {
-        for (int i = left; i <= right; i++) {
-            temp[i] = array[i];
-        }
-        int i = left;
-        int j = middle + 1;
-        int k = left;
-        while (i <= middle && j <= right) {
-            if (temp[i] <= temp[j]) {
-                array[k] = temp[i];
-                i++;
+        while (i <= mid && j <= end) {
+            if (arr[i] < arr[j]) {
+                merged[k++] = arr[i++];
             } else {
-                array[k] = temp[j];
-                j++;
+                merged[k++] = arr[j++];
             }
-            k++;
         }
-        while (i <= middle) {
-            array[k] = temp[i];
-            k++;
-            i++;
+
+        while (i <= mid) {
+            merged[k++] = arr[i++];
+        }
+
+        while (j <= end) {
+            merged[k++] = arr[j++];
+        }
+
+        // Copy back to original array
+        for (int x = 0; x < merged.length; x++) {
+            arr[start + x] = merged[x];
         }
     }
+
+    public static void main(String[] args) {
+        int[] arr = {6, 3, 9, 5, 2, 8};
+        mergeSort(arr, 0, arr.length - 1);
+        System.out.println("Sorted Array: " + Arrays.toString(arr));
+    }
+}
