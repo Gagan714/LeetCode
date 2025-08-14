@@ -1,0 +1,51 @@
+class Solution {
+    public int countHighestScoreNodes(int[] parents) {
+        List<List<Integer>> list=new ArrayList<>();
+        for(int i=0;i<parents.length;i++){
+            list.add(new ArrayList<>());
+        }
+        for(int i=1;i<parents.length;i++){
+            list.get(parents[i]).add(i);
+            //list.get(i).add(parents[i]);
+        }
+        long max=0;
+        int count=0;
+        int dp[]=new int[parents.length+1];
+        Arrays.fill(dp,-1);
+        for(int i=0;i<parents.length;i++){
+            long num=1;
+            int remaining=parents.length-1;
+            for(int j=0;j<list.get(i).size();j++){
+                int val=recurse(list,list.get(i).get(j),i,dp);
+                num*=val;
+                remaining-=val;
+            }
+            if(remaining>0){
+                num*=remaining;
+            }
+            if(num>max){
+                max=num;
+                count=0;
+            }
+            if(num==max){
+                count++;
+            }
+        }
+        return count;
+    }
+    public int recurse(List<List<Integer>> list,int src,int parent,int dp[]){
+        if(dp[src]!=-1){
+            return dp[src];
+        }
+        if(list.get(src).size()==0){
+            return dp[src]=1;
+        }
+        int count=1;
+        for(int i=0;i<list.get(src).size();i++){
+            if(list.get(src).get(i)!=parent){
+                count+=recurse(list,list.get(src).get(i),src,dp);
+            }
+        }
+        return dp[src]=count;
+    }
+}
