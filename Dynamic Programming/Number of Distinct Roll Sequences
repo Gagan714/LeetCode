@@ -1,0 +1,57 @@
+class Solution {
+    int mod=1000000007;
+    public int distinctSequences(int n) {
+        int [][][]dp=new int[n+1][7][7];
+        for(int i=0;i<7;i++){
+            for(int j=0;j<7;j++){
+                dp[0][i][j]=1;
+            }
+        }
+        for(int i=1;i<=n;i++){
+            for(int prev=0;prev<=6;prev++){
+                for(int prev2=0;prev2<=6;prev2++){
+                    for(int next=1;next<=6;next++){
+                        if(prev!=next && prev2!=next && (prev==0 || gcd(prev,next)==1) ){
+                            dp[i][prev][prev2]=(dp[i][prev][prev2]+dp[i-1][next][prev])%mod;
+                        }
+                    }
+                }
+            }
+        }
+        return dp[n][0][0];
+    }
+    public int gcd(int a,int b){
+        if(b==0){
+            return a;
+        }
+        return gcd(b,a%b);
+    }
+    public int recurse(int n,int prev,int prev2,int [][][]dp){
+        if(n==0){
+            return 1;
+        }
+        if(dp[n][prev][prev2]!=-1){
+            return dp[n][prev][prev2];
+        }
+        int count=0;
+        if(prev!=1 && prev2!=1 && (prev==0 || gcd(prev,1)==1 )){
+            count=(count+recurse(n-1,1,prev,dp))%mod;
+        }
+        if(prev!=2 && prev2!=2 && (prev==0 || gcd(prev,2)==1) ){
+            count=(count+recurse(n-1,2,prev,dp))%mod;
+        }
+        if(prev!=3 && prev2!=3 && (prev==0 || gcd(prev,3)==1 )){
+            count=(count+recurse(n-1,3,prev,dp))%mod;
+        }
+        if(prev!=4 && prev2!=4 && (prev==0 || gcd(prev,4)==1 )){
+            count=(count+recurse(n-1,4,prev,dp))%mod;
+        }
+        if(prev!=5 && prev2!=5 && (prev==0 || gcd(prev,5)==1) ){
+            count=(count+recurse(n-1,5,prev,dp))%mod;
+        }
+        if(prev!=6 && prev2!=6 && (prev==0 || gcd(prev,6)==1) ){
+            count=(count+recurse(n-1,6,prev,dp))%mod;
+        }
+        return dp[n][prev][prev2]=count;
+    }
+}
