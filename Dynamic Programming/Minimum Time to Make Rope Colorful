@@ -1,0 +1,24 @@
+class Solution {
+    public int minCost(String colors, int[] neededTime) {
+        int dp[][]=new int[colors.length()+1][26+1];
+        for(int i=0;i<dp.length;i++){
+            Arrays.fill(dp[i],-1);
+        }
+        return recurse(0,colors,neededTime,26,dp);
+    }
+    public int recurse(int index,String colors,int neededTime[],int prev,int [][]dp){
+        if(index==colors.length()){
+            return 0;
+        }
+        if(dp[index][prev]!=-1){
+            return dp[index][prev];
+        }
+        int dont=neededTime[index]+recurse(index+1,colors,neededTime,prev,dp);
+        int num=colors.charAt(index)-'a';
+        int take=Integer.MAX_VALUE;
+        if(prev!=num){
+            take=recurse(index+1,colors,neededTime,num,dp);
+        }
+        return dp[index][prev]=Math.min(take,dont);
+    }
+}
